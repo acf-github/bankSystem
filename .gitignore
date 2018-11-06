@@ -4,3 +4,6 @@
 \.classpath
 
 *.class
+/target/
+
+\.settings/org\.eclipse\.jdt\.core\.prefs
