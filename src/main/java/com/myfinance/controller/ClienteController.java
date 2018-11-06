@@ -1,5 +1,8 @@
 package com.myfinance.controller;
 
-public interface ClienteController {
+import com.myfinance.dao.AbstractEntityDao;
+import com.myfinance.domain.Cliente;
+
+public interface ClienteController extends AbstractEntityDao<Cliente>{
 
 }

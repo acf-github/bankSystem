@@ -8,7 +8,7 @@ public interface Dao<T> {
 
 	List<T> list();
 
-	T PersistOrMerge(T element);
+	T persistOrMerge(T element);
 	
 	void delete(T element);
 }

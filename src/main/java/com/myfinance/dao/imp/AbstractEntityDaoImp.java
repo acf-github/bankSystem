@@ -6,7 +6,7 @@ import com.myfinance.dao.AbstractEntityDao;
 
 public class AbstractEntityDaoImp<T> implements AbstractEntityDao<T> {
 
-	public T PersistOrMerge(T element) {
+	public T persistOrMerge(T element) {
 		// TODO Auto-generated method stub
 		return null;
 	}
