@@ -1,7 +1,5 @@
 package com.myfinance.test;
 
-import org.junit.Test;
-
 import com.myfinance.controller.ClienteController;
 import com.myfinance.controller.imp.ClienteControllerImpl;
 import com.myfinance.domain.Cliente;
@@ -10,8 +8,7 @@ import com.myfinance.domain.Cliente;
 
 public class ClienteTest {
 	
-	@Test
-	public void testPersistCliente(){
+	public static void main(String[] args) {
 		
 		Cliente cliente = new Cliente();
 		cliente.setNome("teste");

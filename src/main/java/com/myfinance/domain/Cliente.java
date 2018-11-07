@@ -7,7 +7,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Cliente")
 public class Cliente extends AbstractEntity {
-	
 
 	private String nome;
 	private String sobreNome;
