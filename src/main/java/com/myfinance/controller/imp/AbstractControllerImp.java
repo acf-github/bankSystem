@@ -10,13 +10,22 @@ import com.myfinance.controller.AbstractController;
 
 public class AbstractControllerImp<T> implements AbstractController<T> {
 
-	public T findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public T findById(Class<T> element, int id) {
+		T retorno = null;
+		try {
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
+			EntityManager manager = factory.createEntityManager();
+			manager.getTransaction().begin();
+			retorno = manager.find(element, id);
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return retorno;
 	}
 
 	public List<T> list() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -29,7 +38,7 @@ public class AbstractControllerImp<T> implements AbstractController<T> {
 			manager.persist(element);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			System.out.println(e.getMessage());
 		}
 		return element;
 	}

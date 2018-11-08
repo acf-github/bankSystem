@@ -12,6 +12,10 @@
 
 		<!-- entidade mapeada -->
 		<class>com.myfinance.domain.Cliente</class>
+		<class>com.myfinance.domain.Pessoa</class>
+		<class>com.myfinance.domain.Conta</class>
+		<class>com.myfinance.domain.Usuario</class>
+		<class>com.myfinance.domain.Produto</class>
 
 		<properties>
 			<!-- dados da conexao -->

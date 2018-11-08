@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Dao<T> {
 
-	T findById(int id);
+	T findById(Class<T> element, int id);
 
 	List<T> list();
 

@@ -2,6 +2,9 @@ package com.myfinance.domain;
 
 import java.util.Date;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Cartao {
 	
 	private int numero;

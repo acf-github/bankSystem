@@ -2,6 +2,8 @@ package com.myfinance.domain;
 
 import java.util.Date;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,6 +28,9 @@ public class Produto extends AbstractEntity {
 	private double limiteDisponivel;
 	private Date dataInicioUso;
 	private double valorMultaUsoPorDia;
+	
+	@Embedded
+	private Cartao cartao;
 
 	@ManyToOne
 	@JoinColumn(insertable = false, updatable = false)
@@ -41,7 +46,6 @@ public class Produto extends AbstractEntity {
 			valorDesconto = qtdDias * valorMultaUsoPorDia;
 			dataInicioUso = null;
 		}
-
 		return valorDesconto;
 	}
 
