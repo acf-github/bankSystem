@@ -3,9 +3,10 @@ package com.myfinance.domain;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Pessoa")
+@Table(name = "Pessoa", uniqueConstraints = { @UniqueConstraint(name = "PessoaUnica", columnNames = {"cpf"}) })
 public class Pessoa extends AbstractEntity {
 
 	private String nome;

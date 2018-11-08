@@ -10,9 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Conta")
+@Table(name = "Conta", uniqueConstraints = {
+		@UniqueConstraint(name = "ContaUnica", columnNames = { "agencia", "contaCorrente", "codigoBanco" }) })
 public class Conta extends AbstractEntity {
 
 	private int agencia;
@@ -36,17 +38,17 @@ public class Conta extends AbstractEntity {
 	public Conta() {
 		this.favorecidoSet = new HashSet<Pessoa>();
 	}
-	
+
 	private void addFavorecido(Pessoa favorecido) {
 		if (favorecido != null) {
 			this.favorecidoSet.add(favorecido);
 		}
 	}
-	
+
 	public Pessoa getOrCreateFavorecido(Pessoa favorecido) {
 		Pessoa retorno = favorecido;
-		
-		if (this.favorecidoSet == null || this.favorecidoSet.isEmpty())  {
+
+		if (this.favorecidoSet == null || this.favorecidoSet.isEmpty()) {
 			addFavorecido(favorecido);
 		} else {
 			for (Pessoa pessoa : favorecidoSet) {

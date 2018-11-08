@@ -13,8 +13,8 @@ public class ClienteTest {
 	public static void main(String[] args) {
 		
 		Pessoa pessoa = new Pessoa();
-		pessoa.setCpf("01726533476");
-		pessoa.setIdade(12);
+		pessoa.setCpf("879854564654");
+		pessoa.setIdade(15);
 		pessoa.setNome("teste de nome");
 		pessoa.setSobreNome("teste sobrenome");
 		pessoa.setRg("21545");
