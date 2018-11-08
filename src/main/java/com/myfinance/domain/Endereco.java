@@ -1,13 +1,15 @@
 package com.myfinance.domain;
 
-public class Endereco {
+import javax.persistence.Embeddable;
 
+@Embeddable
+public class Endereco {
+	
 	private String rua;
 	private String municipio;
 	private String cep;
 	private String pais;
 	private String complemento;
-	
 	
 	public String getRua() {
 		return rua;

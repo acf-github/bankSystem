@@ -1,12 +1,26 @@
 package com.myfinance.domain;
 
-public class Pessoa {
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Pessoa")
+public class Pessoa extends AbstractEntity {
 	
 	private String nome;
 	private String cpf;
 	private String rg;
 	private int idade;
+	
+	@Embedded
 	private Endereco endereco;
+	
+	@ManyToOne
+	@JoinColumn(insertable = false, updatable = false)
+	private Conta conta;
 	
 	
 	public String getNome() {
