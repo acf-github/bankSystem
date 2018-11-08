@@ -28,13 +28,34 @@ public class Conta extends AbstractEntity {
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "favorecido_id")
-	private Set<Pessoa> favorecidoList;
+	private Set<Pessoa> favorecidoSet;
 
 	@OneToOne(cascade = CascadeType.PERSIST, mappedBy = "conta")
 	private Cliente cliente;
 
 	public Conta() {
-		this.favorecidoList = new HashSet<Pessoa>();
+		this.favorecidoSet = new HashSet<Pessoa>();
+	}
+	
+	private void addFavorecido(Pessoa favorecido) {
+		if (favorecido != null) {
+			this.favorecidoSet.add(favorecido);
+		}
+	}
+	
+	public Pessoa getOrCreateFavorecido(Pessoa favorecido) {
+		Pessoa retorno = favorecido;
+		
+		if (this.favorecidoSet == null || this.favorecidoSet.isEmpty())  {
+			addFavorecido(favorecido);
+		} else {
+			for (Pessoa pessoa : favorecidoSet) {
+				if (pessoa.getCpf().equals(favorecido.getCpf())) {
+					retorno = pessoa;
+				}
+			}
+		}
+		return retorno;
 	}
 
 	public int getAgencia() {
@@ -93,20 +114,20 @@ public class Conta extends AbstractEntity {
 		this.produtoList = produtoList;
 	}
 
-	public Set<Pessoa> getFavorecidoList() {
-		return favorecidoList;
-	}
-
-	public void setFavorecidoList(Set<Pessoa> favorecidoList) {
-		this.favorecidoList = favorecidoList;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Set<Pessoa> getFavorecidoSet() {
+		return favorecidoSet;
+	}
+
+	public void setFavorecidoSet(Set<Pessoa> favorecidoSet) {
+		this.favorecidoSet = favorecidoSet;
 	}
 
 }

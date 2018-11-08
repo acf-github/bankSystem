@@ -5,32 +5,37 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="Cliente")
+@Table(name = "Cliente")
 public class Cliente extends AbstractEntity {
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Pessoa pessoa;
-	
-	private String nome;
-	private String sobreNome;
-	
+
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Conta conta;
 	
+	public Cliente() {}
 	
-	public String getNome() {
-		return nome;
+	public Cliente(Pessoa pessoa, Conta conta) {
+		this.pessoa = pessoa;
+		this.conta = conta;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
-	public String getSobreNome() {
-		return sobreNome;
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
-	public void setSobreNome(String sobreNome) {
-		this.sobreNome = sobreNome;
+
+	public Conta getConta() {
+		return conta;
 	}
-	
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
 }

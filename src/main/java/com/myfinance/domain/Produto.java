@@ -3,6 +3,8 @@ package com.myfinance.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,7 +19,9 @@ public class Produto extends AbstractEntity {
 		CARTAO, CHEQUE_ESPECIAL
 	}
 
+	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
+	
 	private double limiteUsado;
 	private double limiteDisponivel;
 	private Date dataInicioUso;

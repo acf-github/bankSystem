@@ -2,6 +2,7 @@ package com.myfinance.domain;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -10,6 +11,7 @@ import javax.persistence.Version;
 public abstract class AbstractEntity {
 
 	@Id
+	@GeneratedValue
 	private int id;
 	
 	@Version
@@ -26,24 +28,12 @@ public abstract class AbstractEntity {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public Integer getVersion() {
 		return version;
 	}
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
 	public Date getDataCadastramento() {
 		return dataCadastramento;
-	}
-
-	public void setDataCadastramento(Date dataCadastramento) {
-		this.dataCadastramento = dataCadastramento;
 	}
 
 }
