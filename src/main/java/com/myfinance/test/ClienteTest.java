@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 public class ClienteTest {
 
 	public static void main(String[] args) {
-		findClienteById();
+		createCliente();
 	}
 
 	public static void findClienteById() {
@@ -28,21 +28,21 @@ public class ClienteTest {
 
 	public static void createCliente() {
 		Pessoa pessoa = new Pessoa();
-<<<<<<< Updated upstream
-		pessoa.setCpf("07869849456");
+
+		pessoa.setCpf("05476722416");
 		pessoa.setIdade(15);
 		pessoa.setNome("teste de nome");
 		pessoa.setSobreNome("teste sobrenome");
 		pessoa.setRg("21545");
 
-=======
-		pessoa.setCpf("017265334716");
+
+		pessoa.setCpf("05476722416");
 		pessoa.setIdade(123);
 		pessoa.setNome("testee de nome");
 		pessoa.setSobreNome("testee sobrenome");
 		pessoa.setRg("215145");
 		
->>>>>>> Stashed changes
+
 		pessoa.getEndereco().setCep("50650040");
 		pessoa.getEndereco().setComplemento("complemento");
 		pessoa.getEndereco().setMunicipio("recife");
@@ -60,22 +60,16 @@ public class ClienteTest {
 		Cliente cliente = new Cliente();
 		cliente.setPessoa(pessoa);
 		cliente.setConta(conta);
-<<<<<<< Updated upstream
-=======
+
 		
 		//ClienteController controller = new ClienteControllerImpl();
 		//controller.persistOrMerge(cliente);
 		
-	}
->>>>>>> Stashed changes
 
-		try {
+		ClienteController controller = new ClienteControllerImpl();
+		controller.persistOrMerge(cliente);
 
-			ClienteController controller = new ClienteControllerImpl();
-			controller.persistOrMerge(cliente);
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+	 
 		}
 	}
-}
+

@@ -9,6 +9,10 @@ import javax.persistence.Persistence;
 
 public class GerenteTest {
 	
+	public static void main(String[] args) {
+		createGerente();
+	}
+	
 	public static void createGerente( ) {
 		
 		Pessoa pessoa = new Pessoa();
@@ -24,12 +28,13 @@ public class GerenteTest {
 		
 		Gerente gerente = new Gerente();
 		gerente.setPessoa(pessoa);
+		gerente.setMatricula(123);
 		
-		try {
-			GerenteController controller = new GerenteControllerImpl();
-			controller.persistOrMerge(gerente)
+		
+		GerenteController controller = new GerenteControllerImpl();
+		controller.persistOrMerge(gerente);
 			
-		}
+		
 	}
 
 }
