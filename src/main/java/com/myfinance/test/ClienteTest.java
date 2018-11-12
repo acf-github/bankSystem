@@ -17,6 +17,7 @@ public class ClienteTest {
 		try {
 			ClienteController controller = new ClienteControllerImpl();
 			Cliente cliente = controller.findById(Cliente.class, 2);
+			System.out.println(cliente.getPessoa().getId());
 			System.out.println(cliente.getPessoa().getNome());
 
 		} catch (Exception e) {
