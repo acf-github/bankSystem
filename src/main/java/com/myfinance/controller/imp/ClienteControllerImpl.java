@@ -7,11 +7,11 @@ import com.myfinance.utils.StringUtils;
 public class ClienteControllerImpl extends AbstractControllerImp<Cliente> implements ClienteController {
 
 	@Override
-	public Cliente persistOrMerge(Cliente element) {
-		if (!StringUtils.validarCPF(element.getPessoa().getCpf())) {
+	public Cliente persistOrMerge(Cliente cliente) {
+		if (!StringUtils.validarCPF(cliente.getPessoa().getCpf())) {
 			throw new RuntimeException("CPF digitado nao e valido");
 		}
-		return super.persistOrMerge(element);
+		return super.persistOrMerge(cliente);
 	}
 
 }

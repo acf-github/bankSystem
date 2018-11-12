@@ -10,14 +10,18 @@ import com.myfinance.controller.AbstractController;
 
 public class AbstractControllerImp<T> implements AbstractController<T> {
 
+	private static EntityManagerFactory factory;
+
+	static {
+		factory = Persistence.createEntityManagerFactory("myFinance");
+	}
+
 	public T findById(Class<T> element, int id) {
 		T retorno = null;
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-			manager.getTransaction().begin();
-			retorno = manager.find(element, id);
-			manager.getTransaction().commit();
+			getEtintyManager().getTransaction().begin();
+			retorno = getEtintyManager().find(element, id);
+			getEtintyManager().getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -31,12 +35,10 @@ public class AbstractControllerImp<T> implements AbstractController<T> {
 
 	public T persistOrMerge(T element) {
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
 
-			manager.getTransaction().begin();
-			manager.persist(element);
-			manager.getTransaction().commit();
+			getEtintyManager().getTransaction().begin();
+			getEtintyManager().persist(element);
+			getEtintyManager().getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -48,4 +50,16 @@ public class AbstractControllerImp<T> implements AbstractController<T> {
 
 	}
 
+	public void deleteById(Class<T> element, int id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public static EntityManager getEtintyManager() {
+		return factory.createEntityManager();
+	}
+
+	public static void close() {
+		factory.close();
+	}
 }

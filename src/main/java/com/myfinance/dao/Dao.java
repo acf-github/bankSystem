@@ -11,4 +11,6 @@ public interface Dao<T> {
 	T persistOrMerge(T element);
 	
 	void delete(T element);
+
+	void deleteById(Class<T> element, int id);
 }
