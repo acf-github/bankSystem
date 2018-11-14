@@ -1,18 +1,63 @@
 package com.myfinance.test;
 
+import java.util.List;
+
 import com.myfinance.controller.ClienteController;
 import com.myfinance.controller.imp.ClienteControllerImpl;
 import com.myfinance.domain.Cliente;
+import com.myfinance.domain.Cliente.ClienteQuery;
 import com.myfinance.domain.Conta;
 import com.myfinance.domain.Pessoa;
-import javax.persistence.Persistence;
 
 public class ClienteTest {
 
 	public static void main(String[] args) {
-		createCliente();
+		removeCliente();
 	}
 
+	public static void removeCliente() {
+		
+		try {
+			ClienteController controller = new ClienteControllerImpl();
+			Cliente cliente = controller.findById(Cliente.class, 1);
+			
+			System.out.println("Removendo Cliente de id = " + cliente.getId());
+			
+			controller.delete(cliente);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	public static void removeClienteById() {
+	
+		int id = 1;
+		try {
+			
+			ClienteController controller = new ClienteControllerImpl();
+			controller.deleteById(Cliente.class, id);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	
+	public static void listCliente() {
+		
+		ClienteQuery clienteQuery = new ClienteQuery();
+//		clienteQuery.setCpf("345345345");
+		
+		ClienteController controller = new ClienteControllerImpl();
+		List<Cliente> retono = controller.list(Cliente.class, clienteQuery);
+		for (Cliente cliente : retono) {
+			System.out.println(cliente.getPessoa().getNome() + " - " + cliente.getPessoa().getCpf());
+		}
+	}
+	
 	public static void findClienteById() {
 
 		try {

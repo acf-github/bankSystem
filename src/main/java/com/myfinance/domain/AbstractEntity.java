@@ -12,10 +12,14 @@ public abstract class AbstractEntity {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	
 	@Version
 	private Integer version;
+	
+	public boolean isNew() {
+		return this.id == null;
+	}
 	
 	private Date dataCadastramento;
 	

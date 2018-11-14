@@ -2,15 +2,18 @@ package com.myfinance.dao;
 
 import java.util.List;
 
+import com.myfinance.controller.Query;
+import com.myfinance.domain.AbstractEntity;
+
 public interface Dao<T> {
 
-	T findById(Class<T> element, int id);
+	T findById(Class<T> clazz, int id);
 
-	List<T> list();
+	List<T> list(Class<T> clazz,  Query query);
 
-	T persistOrMerge(T element);
+	<T extends AbstractEntity> T persistOrMerge(T element);
 	
-	void delete(T element);
+	<T extends AbstractEntity> void delete(T element);
 
-	void deleteById(Class<T> element, int id);
+	void deleteById(Class<T> clazz, int id);
 }
