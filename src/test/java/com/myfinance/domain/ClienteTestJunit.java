@@ -12,7 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.myfinance.controller.ClienteController;
+import com.myfinance.controller.GerenteController;
 import com.myfinance.controller.imp.ClienteControllerImpl;
+import com.myfinance.controller.imp.GerenteControllerImpl;
 import com.myfinance.domain.Cliente.ClienteQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -76,7 +78,7 @@ public class ClienteTestJunit {
 
 		try {
 			ClienteController controller = new ClienteControllerImpl();
-			Cliente cliente = controller.findById(Cliente.class, 2);
+			Cliente cliente = controller.findById(Cliente.class, 1);
 			System.out.println(cliente.getPessoa().getNome());
 
 		} catch (Exception e) {
@@ -88,7 +90,7 @@ public class ClienteTestJunit {
 	public void createCliente() {
 		Pessoa pessoa = new Pessoa();
 
-		pessoa.setCpf("05476722416");
+		pessoa.setCpf("01726533476");
 		pessoa.setIdade(15);
 		pessoa.setNome("teste de nome");
 		pessoa.setSobreNome("teste sobrenome");
@@ -107,11 +109,11 @@ public class ClienteTestJunit {
 		pessoa.getEndereco().setRua("rua");
 
 		Conta conta = new Conta();
-		conta.setAgencia(7667);
+		conta.setAgencia(3455);
 		conta.setCodigoBanco(341);
 		conta.setDigitoAgencia(2);
 		conta.setDigitoContaCorrente(1);
-		conta.setContaCorrente(213234);
+		conta.setContaCorrente(564764);
 		conta.setSaldo(100);
 
 		Cliente cliente = new Cliente();
@@ -128,6 +130,54 @@ public class ClienteTestJunit {
 			System.out.println(e.getMessage());
 		}
 
+	}
+	
+
+	@Test
+	public void cadastrarCliente() {
+		
+		Pessoa pessoa = new Pessoa();
+
+		pessoa.setCpf("97675217047");
+		pessoa.setIdade(15);
+		pessoa.setNome("teste de nome");
+		pessoa.setSobreNome("teste sobrenome");
+		pessoa.setRg("21545");
+
+		pessoa.setCpf("05476722416");
+		pessoa.setIdade(123);
+		pessoa.setNome("testee de nome");
+		pessoa.setSobreNome("testee sobrenome");
+		pessoa.setRg("215145");
+
+		pessoa.getEndereco().setCep("50650040");
+		pessoa.getEndereco().setComplemento("complemento");
+		pessoa.getEndereco().setMunicipio("recife");
+		pessoa.getEndereco().setPais("brasil");
+		pessoa.getEndereco().setRua("rua");
+
+		Conta conta = new Conta();
+		conta.setAgencia(34534);
+		conta.setCodigoBanco(341);
+		conta.setDigitoAgencia(2);
+		conta.setDigitoContaCorrente(1);
+		conta.setContaCorrente(678645);
+		conta.setSaldo(100);
+
+		Cliente cliente = new Cliente();
+		cliente.setPessoa(pessoa);
+		cliente.setConta(conta);
+
+		// ClienteController controller = new ClienteControllerImpl();
+		// controller.persistOrMerge(cliente);
+		try {
+			GerenteController controller = new GerenteControllerImpl();
+			controller.criarCliente(cliente);
+			System.out.println("operacao realizada com sucesso!");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 	public ApplicationContext getContext() {

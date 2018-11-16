@@ -69,7 +69,7 @@ public class Cliente extends AbstractEntity {
 
 	public Cliente() {
 	}
-
+	
 	public Cliente(Pessoa pessoa, Conta conta) {
 		this.pessoa = pessoa;
 		this.conta = conta;

@@ -1,18 +1,22 @@
 package com.myfinance.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 
 @Embeddable
 public class Pessoa {
 
+	@Column(nullable=false) 
 	private String nome;
 	private String sobreNome;
+	@Column(nullable=false) 
 	private String cpf;
+	@Column(nullable=false) 
 	private String rg;
+	@Column(nullable=false) 
 	private int idade;
 
-	@Embedded
+	@Column(nullable=false) 
 	private Endereco endereco;
 	
 	public Pessoa() {

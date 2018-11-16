@@ -1,13 +1,18 @@
 package com.myfinance.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Endereco {
 	
+	@Column(nullable=false) 
 	private String rua;
+	@Column(nullable=false) 
 	private String municipio;
+	@Column(nullable=false) 
 	private String cep;
+	@Column(nullable=false) 
 	private String pais;
 	private String complemento;
 	

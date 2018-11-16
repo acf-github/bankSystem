@@ -13,5 +13,5 @@ public class ClienteControllerImpl extends AbstractControllerImp<Cliente> implem
 		}
 		return super.persistOrMerge(cliente);
 	}
-
+	
 }
