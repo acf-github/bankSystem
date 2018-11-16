@@ -21,4 +21,9 @@ public class GerenteControllerImpl extends AbstractControllerImp<Gerente>  imple
 			getDao().persistOrMerge(cliente);
 		}
 	}
+
+	@Override
+	protected	Class<Gerente> getEntityClass() {
+		return Gerente.class;
+	}
 }

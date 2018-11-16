@@ -7,23 +7,25 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Service;
+
+import com.myfinance.controller.Dao;
 import com.myfinance.controller.Query;
-import com.myfinance.dao.Dao;
 import com.myfinance.domain.AbstractEntity;
 
+@Service
 public class DaoImp<T extends AbstractEntity> implements Dao<T> {
+	
+	@PersistenceContext(unitName = "myFinance")
+	private EntityManager manager;
 
 	public T findById(Class<T> clazz, int id) {
 		T retorno = null;
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-			manager.getTransaction().begin();
 			retorno = manager.find(clazz, id);
-			manager.getTransaction().commit();
-			manager.close();
 		} catch (Exception e) {
 			throw new RuntimeException("Ocorreu um erro ao procurar o elemento {" + e.getMessage() + "}!");
 		}
@@ -35,9 +37,6 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 
 		try {
 
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-
 			TypedQuery<T> queryParametrizada = manager.createQuery(query.getQuery(), clazz);
 
 			if (query.getParamsMap() != null && !query.getParamsMap().isEmpty()) {
@@ -47,7 +46,6 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 			}
 
 			retorno = queryParametrizada.getResultList();
-			manager.close();
 
 		} catch (Exception e) {
 			throw new RuntimeException("Ocorreu um erro ao Listar os elementos {" + e.getMessage() + "}!");
@@ -59,17 +57,11 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 	public T persistOrMerge(T element) {
 		try {
 
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-			manager.getTransaction().begin();
-
 			if (element.isNew()) {
 				manager.persist(element);
 			} else {
 				manager.merge(element);
 			}
-			manager.getTransaction().commit();
-			manager.close();
 		} catch (Exception e) {
 			if (e.getMessage().contains("Duplicate entry")) {
 				throw new RuntimeException("Ja existe um elemento no banco de dados com as mesmas caracteristicas!");
@@ -82,12 +74,8 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 
 	public void delete(T element) {
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-			manager.getTransaction().begin();
-			manager.remove(manager.merge(element));
-			manager.getTransaction().commit();
-			manager.close();
+			T find = (T) manager.getReference(element.getClass(), element.getId());
+			manager.remove(find);
 		} catch (Exception e) {
 			throw new RuntimeException("Ocorreu um erro ao deletar o elemento {" + e.getMessage() + "}!");
 		}
@@ -95,13 +83,8 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 
 	public void deleteById(Class<T> clazz, int id) {
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
-			EntityManager manager = factory.createEntityManager();
-			manager.getTransaction().begin();
 			T find = manager.find(clazz, id);
 			manager.remove(find);
-			manager.getTransaction().commit();
-			manager.close();
 		} catch (Exception e) {
 			throw new RuntimeException("Ocorreu um erro ao deletar o elemento {" + e.getMessage() + "}!");
 		}

@@ -13,16 +13,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.myfinance.controller.ClienteController;
 import com.myfinance.controller.GerenteController;
-import com.myfinance.controller.imp.ClienteControllerImpl;
 import com.myfinance.controller.imp.GerenteControllerImpl;
 import com.myfinance.domain.Cliente.ClienteQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:**/applicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:META-INF/applicationContext.xml" })
 public class ClienteTestJunit {
 
 	@Autowired
 	public ApplicationContext context;
+	
+	@Autowired
+	public ClienteController clienteController;
 
 	@Before
 	public void init() {
@@ -35,8 +37,7 @@ public class ClienteTestJunit {
 		ClienteQuery clienteQuery = new ClienteQuery();
 		// clienteQuery.setCpf("345345345");
 
-		ClienteController controller = new ClienteControllerImpl();
-		List<Cliente> retono = controller.list(Cliente.class, clienteQuery);
+		List<Cliente> retono = clienteController.list(Cliente.class, clienteQuery);
 		for (Cliente cliente : retono) {
 			System.out.println(cliente.getPessoa().getNome() + " - " + cliente.getPessoa().getCpf());
 		}
@@ -46,12 +47,11 @@ public class ClienteTestJunit {
 	public void removeCliente() {
 
 		try {
-			ClienteController controller = new ClienteControllerImpl();
-			Cliente cliente = controller.findById(Cliente.class, 1);
+			Cliente cliente = clienteController.findById(Cliente.class, 1);
 
 			System.out.println("Removendo Cliente de id = " + cliente.getId());
 
-			controller.delete(cliente);
+			clienteController.delete(cliente);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -64,8 +64,7 @@ public class ClienteTestJunit {
 		int id = 1;
 		try {
 
-			ClienteController controller = new ClienteControllerImpl();
-			controller.deleteById(Cliente.class, id);
+			clienteController.deleteById(Cliente.class, id);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -77,8 +76,7 @@ public class ClienteTestJunit {
 	public void findClienteById() {
 
 		try {
-			ClienteController controller = new ClienteControllerImpl();
-			Cliente cliente = controller.findById(Cliente.class, 1);
+			Cliente cliente = clienteController.findById(Cliente.class, 1);
 			System.out.println(cliente.getPessoa().getNome());
 
 		} catch (Exception e) {
@@ -123,8 +121,7 @@ public class ClienteTestJunit {
 		// ClienteController controller = new ClienteControllerImpl();
 		// controller.persistOrMerge(cliente);
 		try {
-			ClienteController controller = new ClienteControllerImpl();
-			controller.persistOrMerge(cliente);
+			clienteController.persistOrMerge(cliente);
 			System.out.println("operacao realizada com sucesso!");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

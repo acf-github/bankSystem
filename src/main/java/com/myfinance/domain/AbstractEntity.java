@@ -27,7 +27,7 @@ public abstract class AbstractEntity {
 		super();
 		this.dataCadastramento = new Date();
 	}
-
+	
 	public int getId() {
 		return id;
 	}

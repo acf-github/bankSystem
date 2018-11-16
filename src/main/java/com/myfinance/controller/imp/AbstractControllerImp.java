@@ -2,21 +2,20 @@ package com.myfinance.controller.imp;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.myfinance.controller.AbstractController;
+import com.myfinance.controller.Dao;
 import com.myfinance.controller.Query;
-import com.myfinance.dao.Dao;
 import com.myfinance.domain.AbstractEntity;
 
-public class AbstractControllerImp<T extends AbstractEntity> implements AbstractController<T> {
+@Transactional(rollbackFor = { Throwable.class }, value = "transactionManager")
+public abstract class AbstractControllerImp<T extends AbstractEntity> implements AbstractController<T> {
 	
+	@Autowired
 	private Dao dao;
-	
-	public AbstractControllerImp(){
-		dao = new DaoImp<T>();
-	}
-	
+
 	public T findById(Class<T> clazz, int id) {
 		return (T) dao.findById(clazz, id);
 	}
@@ -43,8 +42,6 @@ public class AbstractControllerImp<T extends AbstractEntity> implements Abstract
 	public Dao getDao() {
 		return dao;
 	}
-
-	public void setDao(Dao dao) {
-		this.dao = dao;
-	}
+	
+	protected abstract <T> Class<T> getEntityClass();
 }

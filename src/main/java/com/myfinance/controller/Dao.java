@@ -1,8 +1,7 @@
-package com.myfinance.dao;
+package com.myfinance.controller;
 
 import java.util.List;
 
-import com.myfinance.controller.Query;
 import com.myfinance.domain.AbstractEntity;
 
 public interface Dao<T extends AbstractEntity> {
