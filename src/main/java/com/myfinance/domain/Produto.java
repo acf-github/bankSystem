@@ -2,7 +2,6 @@ package com.myfinance.domain;
 
 import java.util.Date;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

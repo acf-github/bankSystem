@@ -16,6 +16,7 @@
 		<class>com.myfinance.domain.Conta</class>
 		<class>com.myfinance.domain.Usuario</class>
 		<class>com.myfinance.domain.Produto</class>
+		<class>com.myfinance.domain.Favorecido</class>
 
 		<properties>
 			<!-- dados da conexao -->

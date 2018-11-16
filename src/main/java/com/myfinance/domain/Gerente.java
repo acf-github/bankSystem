@@ -1,14 +1,13 @@
 package com.myfinance.domain;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class Gerente extends AbstractEntity {
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@Embedded
 	private Pessoa pessoa;
 	
 	@Transient

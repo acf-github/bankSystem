@@ -1,69 +1,82 @@
-package com.myfinance.test;
+package com.myfinance.domain;
 
 import java.util.List;
 
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.myfinance.controller.ClienteController;
 import com.myfinance.controller.imp.ClienteControllerImpl;
-import com.myfinance.domain.Cliente;
 import com.myfinance.domain.Cliente.ClienteQuery;
-import com.myfinance.domain.Conta;
-import com.myfinance.domain.Pessoa;
 
-public class ClienteTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath*:**/applicationContext.xml" })
+public class ClienteTestJunit {
 
-	public static void main(String[] args) {
-		removeCliente();
+	@Autowired
+	public ApplicationContext context;
+
+	@Before
+	public void init() {
+		Assume.assumeTrue(true);
 	}
 
-	public static void removeCliente() {
-		
-		try {
-			ClienteController controller = new ClienteControllerImpl();
-			Cliente cliente = controller.findById(Cliente.class, 1);
-			
-			System.out.println("Removendo Cliente de id = " + cliente.getId());
-			
-			controller.delete(cliente);
+	@Test
+	public void listCliente() {
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-
-	public static void removeClienteById() {
-	
-		int id = 1;
-		try {
-			
-			ClienteController controller = new ClienteControllerImpl();
-			controller.deleteById(Cliente.class, id);
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-	}
-	
-	
-	public static void listCliente() {
-		
 		ClienteQuery clienteQuery = new ClienteQuery();
-//		clienteQuery.setCpf("345345345");
-		
+		// clienteQuery.setCpf("345345345");
+
 		ClienteController controller = new ClienteControllerImpl();
 		List<Cliente> retono = controller.list(Cliente.class, clienteQuery);
 		for (Cliente cliente : retono) {
 			System.out.println(cliente.getPessoa().getNome() + " - " + cliente.getPessoa().getCpf());
 		}
 	}
-	
-	public static void findClienteById() {
+
+	@Test
+	public void removeCliente() {
+
+		try {
+			ClienteController controller = new ClienteControllerImpl();
+			Cliente cliente = controller.findById(Cliente.class, 1);
+
+			System.out.println("Removendo Cliente de id = " + cliente.getId());
+
+			controller.delete(cliente);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Test
+	public void removeClienteById() {
+
+		int id = 1;
+		try {
+
+			ClienteController controller = new ClienteControllerImpl();
+			controller.deleteById(Cliente.class, id);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	@Test
+	public void findClienteById() {
 
 		try {
 			ClienteController controller = new ClienteControllerImpl();
 			Cliente cliente = controller.findById(Cliente.class, 2);
-			System.out.println(cliente.getPessoa().getId());
 			System.out.println(cliente.getPessoa().getNome());
 
 		} catch (Exception e) {
@@ -71,7 +84,8 @@ public class ClienteTest {
 		}
 	}
 
-	public static void createCliente() {
+	@Test
+	public void createCliente() {
 		Pessoa pessoa = new Pessoa();
 
 		pessoa.setCpf("05476722416");
@@ -80,13 +94,11 @@ public class ClienteTest {
 		pessoa.setSobreNome("teste sobrenome");
 		pessoa.setRg("21545");
 
-
 		pessoa.setCpf("05476722416");
 		pessoa.setIdade(123);
 		pessoa.setNome("testee de nome");
 		pessoa.setSobreNome("testee sobrenome");
 		pessoa.setRg("215145");
-		
 
 		pessoa.getEndereco().setCep("50650040");
 		pessoa.getEndereco().setComplemento("complemento");
@@ -106,15 +118,24 @@ public class ClienteTest {
 		cliente.setPessoa(pessoa);
 		cliente.setConta(conta);
 
-		
-		//ClienteController controller = new ClienteControllerImpl();
-		//controller.persistOrMerge(cliente);
-		
-
-		ClienteController controller = new ClienteControllerImpl();
-		controller.persistOrMerge(cliente);
-
-	 
+		// ClienteController controller = new ClienteControllerImpl();
+		// controller.persistOrMerge(cliente);
+		try {
+			ClienteController controller = new ClienteControllerImpl();
+			controller.persistOrMerge(cliente);
+			System.out.println("operacao realizada com sucesso!");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+
 	}
 
+	public ApplicationContext getContext() {
+		return context;
+	}
+
+	public void setContext(ApplicationContext context) {
+		this.context = context;
+	}
+
+}

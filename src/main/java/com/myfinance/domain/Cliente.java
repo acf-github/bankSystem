@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -57,7 +58,7 @@ public class Cliente extends AbstractEntity {
 		}
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@Embedded
 	private Pessoa pessoa;
 
 	@OneToOne(cascade = CascadeType.PERSIST)

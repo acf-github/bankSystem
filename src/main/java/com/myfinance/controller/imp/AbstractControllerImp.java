@@ -13,7 +13,7 @@ import com.myfinance.controller.AbstractController;
 import com.myfinance.controller.Query;
 import com.myfinance.domain.AbstractEntity;
 
-public class AbstractControllerImp<T> implements AbstractController<T> {
+public class AbstractControllerImp<T extends AbstractEntity> implements AbstractController<T> {
 
 	public T findById(Class<T> clazz, int id) {
 		T retorno = null;
@@ -24,46 +24,46 @@ public class AbstractControllerImp<T> implements AbstractController<T> {
 			retorno = manager.find(clazz, id);
 			manager.getTransaction().commit();
 			manager.close();
-			} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			throw new RuntimeException("Ocorreu um erro ao procurar o elemento {" + e.getMessage() + "}!");
 		}
 		return retorno;
 	}
 
 	public List<T> list(Class<T> clazz, Query query) {
-		
+
 		List<T> retorno = new ArrayList<T>();
 
 		try {
 
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
 			EntityManager manager = factory.createEntityManager();
-			
+
 			TypedQuery<T> queryParametrizada = manager.createQuery(query.getQuery(), clazz);
-			
+
 			if (query.getParamsMap() != null && !query.getParamsMap().isEmpty()) {
 				for (Entry<String, String> entrySet : query.getParamsMap().entrySet()) {
 					queryParametrizada.setParameter(entrySet.getKey(), entrySet.getValue());
 				}
 			}
-			
+
 			retorno = queryParametrizada.getResultList();
 			manager.close();
-	
+
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new RuntimeException("Ocorreu um erro ao Listar os elementos {" + e.getMessage() + "}!");
 		}
-		
+
 		return retorno;
 	}
 
-	public <T extends AbstractEntity> T persistOrMerge(T element) {
+	public T persistOrMerge(T element) {
 		try {
 
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
 			EntityManager manager = factory.createEntityManager();
 			manager.getTransaction().begin();
-			
+
 			if (element.isNew()) {
 				manager.persist(element);
 			} else {
@@ -72,34 +72,39 @@ public class AbstractControllerImp<T> implements AbstractController<T> {
 			manager.getTransaction().commit();
 			manager.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			if (e.getMessage().contains("Duplicate entry")) {
+				throw new RuntimeException("Ja existe um elemento no banco de dados com as mesmas caracteristicas!");
+			} else {
+				throw new RuntimeException("Ocorreu um erro ao salvar o elemento {" + e.getMessage() + "}!");
+			}
 		}
 		return element;
 	}
 
-	public <T extends AbstractEntity> void delete(T element) {
+	public void delete(T element) {
 		try {
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
 			EntityManager manager = factory.createEntityManager();
 			manager.getTransaction().begin();
-			
-			T find = (T) manager.find(element.getClass(), element.getId());
-			manager.remove(manager.merge(find));
+			manager.remove(manager.merge(element));
 			manager.getTransaction().commit();
 			manager.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new RuntimeException("Ocorreu um erro ao deletar o elemento {" + e.getMessage() + "}!");
 		}
 	}
 
 	public void deleteById(Class<T> clazz, int id) {
 		try {
-
-			T find = findById(clazz, id);
-//			delete(find);
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory("myFinance");
+			EntityManager manager = factory.createEntityManager();
+			manager.getTransaction().begin();
+			T find = manager.find(clazz, id);
+			manager.remove(find);
+			manager.getTransaction().commit();
+			manager.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new RuntimeException("Ocorreu um erro ao deletar o elemento {" + e.getMessage() + "}!");
 		}
-
 	}
 }
