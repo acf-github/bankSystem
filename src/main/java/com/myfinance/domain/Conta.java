@@ -1,7 +1,9 @@
 package com.myfinance.domain;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,10 +15,64 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.myfinance.controller.Query;
+
 @Entity
 @Table(name = "Conta", uniqueConstraints = {
 		@UniqueConstraint(name = "ContaUnica", columnNames = { "agencia", "contaCorrente", "codigoBanco" }) })
 public class Conta extends AbstractEntity {
+
+	public static class ContaQuery implements Query {
+
+		private final String SELECT_QUERY = "select c from Conta c ";
+
+		private final String WHERE_QUERY = " where "
+				+ "(:agencia is null or :agencia = '' or c.agencia = :agencia) "
+				+ "and (:digitoAgencia is null or :digitoAgencia = '' or c.digitoAgencia = :digitoAgencia)"
+		        + "and (:contaCorrente is null or :contaCorrente = '' or c.contaCorrente = :contaCorrente)"
+		        + "and (:digitoContaCorrente is null or :digitoContaCorrente = '' or c.digitoContaCorrente = :digitoContaCorrente)"
+		        + "and (:codigoBanco is null or :codigoBanco = '' or c.codigoBanco = :codigoBanco)";
+		public String getQuery() {
+			return SELECT_QUERY + WHERE_QUERY;
+		}
+		
+		private int agencia;
+		private int digitoAgencia;
+		private int contaCorrente;
+		private int digitoContaCorrente;
+		private int codigoBanco;
+
+		public Map<String, String> getParamsMap() {
+			
+			Map<String, String> map = new HashMap<String, String>();
+			
+			map.put("agencia", Integer.toString(getAgencia()));
+			map.put("digitoAgencia", Integer.toString(getDigitoAgencia()));
+			map.put("contaCorrente", Integer.toString(getContaCorrente()));
+			map.put("digitoContaCorrente", Integer.toString(getDigitoContaCorrente()));
+			map.put("codigoBanco", Integer.toString(getCodigoBanco()));
+			
+			return map;
+		}
+		
+		public int getAgencia() {
+			return agencia;
+		}
+		
+		public int getDigitoAgencia() {
+			return digitoAgencia;
+		}
+		
+		public int getContaCorrente() {
+			return contaCorrente;
+		}
+		public int getDigitoContaCorrente() {
+			return digitoContaCorrente;
+		}
+		public int getCodigoBanco() {
+			return codigoBanco;
+		}
+	}
 
 	@Column(nullable=false)
 	private int agencia;
