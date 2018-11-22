@@ -1,4 +1,4 @@
-package com.myfinance.controller.imp;
+package com.myfinance.service.imp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
 
-import com.myfinance.controller.Dao;
-import com.myfinance.controller.Query;
 import com.myfinance.domain.AbstractEntity;
+import com.myfinance.service.Dao;
+import com.myfinance.service.Query;
 
 @Service
 public class DaoImp<T extends AbstractEntity> implements Dao<T> {

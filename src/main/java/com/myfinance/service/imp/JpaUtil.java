@@ -1,4 +1,4 @@
-package com.myfinance.controller.imp;
+package com.myfinance.service.imp;
 
 public class JpaUtil {
 

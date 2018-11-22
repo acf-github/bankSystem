@@ -1,17 +1,17 @@
-package com.myfinance.controller.imp;
+package com.myfinance.service.imp;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myfinance.controller.AbstractController;
-import com.myfinance.controller.Dao;
-import com.myfinance.controller.Query;
 import com.myfinance.domain.AbstractEntity;
+import com.myfinance.service.AbstractService;
+import com.myfinance.service.Dao;
+import com.myfinance.service.Query;
 
 @Transactional(rollbackFor = { Throwable.class }, value = "transactionManager")
-public abstract class AbstractControllerImp<T extends AbstractEntity> implements AbstractController<T> {
+public abstract class AbstractServiceImp<T extends AbstractEntity> implements AbstractService<T> {
 	
 	@Autowired
 	private Dao dao;

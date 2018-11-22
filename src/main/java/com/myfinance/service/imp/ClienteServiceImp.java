@@ -1,17 +1,17 @@
-package com.myfinance.controller;
+package com.myfinance.service.imp;
 
 import org.springframework.stereotype.Service;
 
-import com.myfinance.controller.imp.AbstractControllerImp;
-import com.myfinance.domain.Cliente;
+import com.myfinance.domain.Pessoa;
+import com.myfinance.service.ClienteService;
 import com.myfinance.utils.StringUtils;
 
 @Service
-public class ClienteControllerImpl extends AbstractControllerImp<Cliente> implements ClienteController{
+public class ClienteServiceImp extends AbstractServiceImp<Pessoa> implements ClienteService{
 
 	@Override
-	public Cliente persistOrMerge(Cliente cliente) {
-		if (!StringUtils.validarCPF(cliente.getPessoa().getCpf())) {
+	public Pessoa persistOrMerge(Pessoa cliente) {
+		if (!StringUtils.validarCPF(cliente.getDadosPessoais().getCpf())) {
 			throw new RuntimeException("CPF digitado nao e valido");
 		}
 		return super.persistOrMerge(cliente);
@@ -19,8 +19,8 @@ public class ClienteControllerImpl extends AbstractControllerImp<Cliente> implem
 	
 	@Override
 	protected
-	Class<Cliente> getEntityClass() {
-		return Cliente.class;
+	Class<Pessoa> getEntityClass() {
+		return Pessoa.class;
 	}
 	
 
