@@ -40,7 +40,7 @@ public class DaoImp<T extends AbstractEntity> implements Dao<T> {
 			TypedQuery<T> queryParametrizada = manager.createQuery(query.getQuery(), clazz);
 
 			if (query.getParamsMap() != null && !query.getParamsMap().isEmpty()) {
-				for (Entry<String, String> entrySet : query.getParamsMap().entrySet()) {
+				for (Entry<String, Object> entrySet : query.getParamsMap().entrySet()) {
 					queryParametrizada.setParameter(entrySet.getKey(), entrySet.getValue());
 				}
 			}

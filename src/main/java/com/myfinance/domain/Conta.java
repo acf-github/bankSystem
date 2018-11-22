@@ -26,61 +26,84 @@ public class Conta extends AbstractEntity {
 
 		private final String SELECT_QUERY = "select c from Conta c ";
 
-		private final String WHERE_QUERY = " where "
-				+ "(:agencia is null or :agencia = '' or c.agencia = :agencia) "
-				+ "and (:digitoAgencia is null or :digitoAgencia = '' or c.digitoAgencia = :digitoAgencia)"
-		        + "and (:contaCorrente is null or :contaCorrente = '' or c.contaCorrente = :contaCorrente)"
-		        + "and (:digitoContaCorrente is null or :digitoContaCorrente = '' or c.digitoContaCorrente = :digitoContaCorrente)"
-		        + "and (:codigoBanco is null or :codigoBanco = '' or c.codigoBanco = :codigoBanco)";
+		private final String WHERE_QUERY = " where " + "(:agencia is null or :agencia = 0 or c.agencia = :agencia) "
+				+ "and (:digitoAgencia is null or :digitoAgencia = 0 or c.digitoAgencia = :digitoAgencia)"
+				+ "and (:contaCorrente is null or :contaCorrente = 0 or c.contaCorrente = :contaCorrente)"
+				+ "and (:digitoContaCorrente is null or :digitoContaCorrente = 0 or c.digitoContaCorrente = :digitoContaCorrente)"
+				+ "and (:codigoBanco is null or :codigoBanco = 0 or c.codigoBanco = :codigoBanco)";
+
 		public String getQuery() {
 			return SELECT_QUERY + WHERE_QUERY;
 		}
-		
-		private int agencia;
-		private int digitoAgencia;
-		private int contaCorrente;
-		private int digitoContaCorrente;
-		private int codigoBanco;
 
-		public Map<String, String> getParamsMap() {
-			
-			Map<String, String> map = new HashMap<String, String>();
-			
-			map.put("agencia", Integer.toString(getAgencia()));
-			map.put("digitoAgencia", Integer.toString(getDigitoAgencia()));
-			map.put("contaCorrente", Integer.toString(getContaCorrente()));
-			map.put("digitoContaCorrente", Integer.toString(getDigitoContaCorrente()));
-			map.put("codigoBanco", Integer.toString(getCodigoBanco()));
-			
+		private Integer agencia;
+		private Integer digitoAgencia;
+		private Integer contaCorrente;
+		private Integer digitoContaCorrente;
+		private Integer codigoBanco;
+
+		public Map<String, Object> getParamsMap() {
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("agencia", getAgencia());
+			map.put("digitoAgencia", getDigitoAgencia());
+			map.put("contaCorrente", getContaCorrente());
+			map.put("digitoContaCorrente", getDigitoContaCorrente());
+			map.put("codigoBanco", getCodigoBanco());
+
 			return map;
 		}
-		
-		public int getAgencia() {
+
+		public Integer getAgencia() {
 			return agencia;
 		}
-		
-		public int getDigitoAgencia() {
+
+		public void setAgencia(Integer agencia) {
+			this.agencia = agencia;
+		}
+
+		public Integer getDigitoAgencia() {
 			return digitoAgencia;
 		}
-		
-		public int getContaCorrente() {
+
+		public void setDigitoAgencia(Integer digitoAgencia) {
+			this.digitoAgencia = digitoAgencia;
+		}
+
+		public Integer getContaCorrente() {
 			return contaCorrente;
 		}
-		public int getDigitoContaCorrente() {
+
+		public void setContaCorrente(Integer contaCorrente) {
+			this.contaCorrente = contaCorrente;
+		}
+
+		public Integer getDigitoContaCorrente() {
 			return digitoContaCorrente;
 		}
-		public int getCodigoBanco() {
+
+		public void setDigitoContaCorrente(Integer digitoContaCorrente) {
+			this.digitoContaCorrente = digitoContaCorrente;
+		}
+
+		public Integer getCodigoBanco() {
 			return codigoBanco;
 		}
+
+		public void setCodigoBanco(Integer codigoBanco) {
+			this.codigoBanco = codigoBanco;
+		}
+
 	}
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int agencia;
 	private int digitoAgencia;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int contaCorrente;
 	private int digitoContaCorrente;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private int codigoBanco;
 	private double saldo;
 
@@ -102,6 +125,12 @@ public class Conta extends AbstractEntity {
 	private void addFavorecido(Favorecido favorecido) {
 		if (favorecido != null) {
 			this.favorecidoSet.add(favorecido);
+		}
+	}
+
+	public void depositar(double valor) {
+		if (valor > 0) {
+			this.saldo = getSaldo() + valor;
 		}
 	}
 

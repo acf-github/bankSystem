@@ -20,7 +20,7 @@ public class ClienteTestJunit {
 
 	@Autowired
 	public ApplicationContext context;
-	
+
 	@Autowired
 	public ClienteService clienteController;
 
@@ -28,25 +28,34 @@ public class ClienteTestJunit {
 	public void init() {
 		Assume.assumeTrue(true);
 	}
-	
+
 	@Test
 	public void editarCliente() {
-		
-		Pessoa cliente  = clienteController.findById(Pessoa.class, 1);
-		cliente.getDadosPessoais().setNome("novo nome teste");
-		
-		clienteController.persistOrMerge(cliente);
+
+		try {
+			Pessoa cliente = clienteController.findById(Pessoa.class, 4);
+			cliente.getDadosPessoais().setNome("novo nome teste");
+
+			clienteController.persistOrMerge(cliente);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 	@Test
 	public void listCliente() {
 
-		PessoaQuery clienteQuery = new PessoaQuery();
-		// clienteQuery.setCpf("345345345");
+		try {
+			PessoaQuery clienteQuery = new PessoaQuery();
+			// clienteQuery.setCpf("345345345");
 
-		List<Pessoa> retono = clienteController.list(Pessoa.class, clienteQuery);
-		for (Pessoa cliente : retono) {
-			System.out.println(cliente.getDadosPessoais().getNome() + " - " + cliente.getDadosPessoais().getCpf());
+			List<Pessoa> retono = clienteController.list(Pessoa.class, clienteQuery);
+			for (Pessoa cliente : retono) {
+				System.out.println(cliente.getDadosPessoais().getNome() + " - " + cliente.getDadosPessoais().getCpf());
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -68,7 +77,7 @@ public class ClienteTestJunit {
 	@Test
 	public void removeClienteById() {
 
-		int id = 1;
+		int id = 4;
 		try {
 
 			clienteController.deleteById(Pessoa.class, id);
@@ -134,57 +143,6 @@ public class ClienteTestJunit {
 			System.out.println(e.getMessage());
 		}
 
-	}
-	
-
-	@Test
-	public void cadastrarCliente() {
-		
-		DadosPessoais pessoa = new DadosPessoais();
-
-		pessoa.setCpf("97675217047");
-		pessoa.setIdade(15);
-		pessoa.setNome("teste de nome");
-		pessoa.setSobreNome("teste sobrenome");
-		pessoa.setRg("21545");
-
-		pessoa.setCpf("05476722416");
-		pessoa.setIdade(123);
-		pessoa.setNome("testee de nome");
-		pessoa.setSobreNome("testee sobrenome");
-		pessoa.setRg("215145");
-
-		pessoa.getEndereco().setCep("50650040");
-		pessoa.getEndereco().setComplemento("complemento");
-		pessoa.getEndereco().setMunicipio("recife");
-		pessoa.getEndereco().setPais("brasil");
-		pessoa.getEndereco().setRua("rua");
-
-		Conta conta = new Conta();
-		conta.setAgencia(34534);
-		conta.setCodigoBanco(341);
-		conta.setDigitoAgencia(2);
-		conta.setDigitoContaCorrente(1);
-		conta.setContaCorrente(678645);
-		conta.setSaldo(100);
-
-		Pessoa cliente = new Pessoa();
-		cliente.setDadosPessoais(pessoa);
-		cliente.setConta(conta);
-		
-		Usuario usuario = new  Usuario();
-		usuario.setLogin("root");
-		usuario.setPassword("teste12345");
-		
-		cliente.setUsuario(usuario);
-
-		try {
-			clienteController.persistOrMerge(cliente);
-			System.out.println("operacao realizada com sucesso!");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
 	}
 
 	public ApplicationContext getContext() {

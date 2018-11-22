@@ -6,6 +6,6 @@ public interface Query {
 	
 	public String getQuery();
 	
-	public Map<String, String> getParamsMap();
+	public Map<String, Object> getParamsMap();
 
 }

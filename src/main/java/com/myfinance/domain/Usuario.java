@@ -30,9 +30,9 @@ public class Usuario extends AbstractEntity {
 		private String login;
 		private String password;
 
-		public Map<String, String> getParamsMap() {
+		public Map<String, Object> getParamsMap() {
 			
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, Object> map = new HashMap<String, Object>();
 			
 			map.put("login", getLogin());
 			map.put("password", getPassword());
