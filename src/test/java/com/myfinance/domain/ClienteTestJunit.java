@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.myfinance.domain.Pessoa.PessoaQuery;
+import com.myfinance.domain.Pessoa.TipoPessoa;
 import com.myfinance.service.ClienteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -133,6 +134,7 @@ public class ClienteTestJunit {
 		Pessoa cliente = new Pessoa();
 		cliente.setDadosPessoais(dadosPessoais);
 		cliente.setConta(conta);
+		cliente.setTipoPessoa(TipoPessoa.CLIENTE);
 
 		// ClienteController controller = new ClienteControllerImpl();
 		// controller.persistOrMerge(cliente);

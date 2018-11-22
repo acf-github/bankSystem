@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -71,6 +72,7 @@ public class Pessoa extends AbstractEntity {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Conta conta;
 	
+	@Column(nullable=false)
 	@Enumerated(EnumType.STRING)
 	private TipoPessoa tipoPessoa;
 	

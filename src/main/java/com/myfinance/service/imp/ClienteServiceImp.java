@@ -14,6 +14,7 @@ public class ClienteServiceImp extends AbstractServiceImp<Pessoa> implements Cli
 		if (!StringUtils.validarCPF(cliente.getDadosPessoais().getCpf())) {
 			throw new RuntimeException("CPF digitado nao e valido");
 		}
+		
 		return super.persistOrMerge(cliente);
 	}
 	
