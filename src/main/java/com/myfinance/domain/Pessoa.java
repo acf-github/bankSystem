@@ -1,73 +1,118 @@
 package com.myfinance.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import java.util.HashMap;
+import java.util.Map;
 
-@Embeddable
-public class Pessoa {
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-	@Column(nullable=false) 
-	private String nome;
-	private String sobreNome;
-	@Column(nullable=false) 
-	private String cpf;
-	@Column(nullable=false) 
-	private String rg;
-	@Column(nullable=false) 
-	private int idade;
+import com.myfinance.service.Query;
 
-	@Column(nullable=false) 
-	private Endereco endereco;
+@Entity
+@Table(name = "Pessoa")
+public class Pessoa extends AbstractEntity {
+
+	public static class PessoaQuery implements Query {
+
+		private final String SELECT_QUERY = "select c from Pessoa c ";
+
+		private final String WHERE_QUERY = " where "
+				+ "(:cpf is null or :cpf = '' or c.pessoa.cpf = :cpf) "
+				+ "and (:nome is null or :nome = '' or c.pessoa.nome = :nome)";
+
+		public String getQuery() {
+			return SELECT_QUERY + WHERE_QUERY;
+		}
+		
+		private String cpf;
+		private String nome;
+
+		public Map<String, String> getParamsMap() {
+			
+			Map<String, String> map = new HashMap<String, String>();
+			
+			map.put("cpf", getCpf());
+			map.put("nome", getNome());
+			
+			return map;
+		}
+
+		public String getCpf() {
+			return cpf;
+		}
+
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
+
+		public String getNome() {
+			return nome;
+		}
+
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+	}
 	
+	public enum TipoPessoa {
+		CLIENTE, GERENTE
+	}
+
+	@Embedded
+	private DadosPessoais dadosPessoais;
+
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Conta conta;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoPessoa tipoPessoa;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Usuario usuario;
+ 
 	public Pessoa() {
-		this.endereco = new Endereco();
+	}
+	
+	public Pessoa(DadosPessoais dadosPessoais, Conta conta) {
+		this.dadosPessoais = dadosPessoais;
+		this.conta = conta;
 	}
 
-	public String getNome() {
-		return nome;
+	public Conta getConta() {
+		return conta;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
-	public String getRg() {
-		return rg;
+	public DadosPessoais getDadosPessoais() {
+		return dadosPessoais;
 	}
 
-	public void setRg(String rg) {
-		this.rg = rg;
+	public void setDadosPessoais(DadosPessoais dadosPessoais) {
+		this.dadosPessoais = dadosPessoais;
 	}
 
-	public int getIdade() {
-		return idade;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getSobreNome() {
-		return sobreNome;
-	}
-
-	public void setSobreNome(String sobreNome) {
-		this.sobreNome = sobreNome;
-	}
 }

@@ -9,13 +9,13 @@ import javax.persistence.Table;
 public class Favorecido extends AbstractEntity {
 
 	@Embedded
-	private Pessoa pessoa;
+	private DadosPessoais pessoa;
 
-	public Pessoa getPessoa() {
+	public DadosPessoais getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(DadosPessoais pessoa) {
 		this.pessoa = pessoa;
 	}
 

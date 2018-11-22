@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.myfinance.controller.Query;
+import com.myfinance.service.Query;
 
 @Entity
 @Table(name = "Conta", uniqueConstraints = {
@@ -93,7 +93,7 @@ public class Conta extends AbstractEntity {
 	private Set<Favorecido> favorecidoSet;
 
 	@OneToOne(cascade = CascadeType.PERSIST, mappedBy = "conta")
-	private Cliente cliente;
+	private Pessoa pessoa;
 
 	public Conta() {
 		this.favorecidoSet = new HashSet<Favorecido>();
@@ -176,20 +176,20 @@ public class Conta extends AbstractEntity {
 		this.produtoList = produtoList;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public Set<Favorecido> getFavorecidoSet() {
 		return favorecidoSet;
 	}
 
 	public void setFavorecidoSet(Set<Favorecido> favorecidoSet) {
 		this.favorecidoSet = favorecidoSet;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 }

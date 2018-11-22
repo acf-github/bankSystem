@@ -40,5 +40,9 @@ public class StringUtils {
 		}
 		return retorno;
 	}
+	
+	public static boolean isNullOrEmpty(String string) {
+		return string == null || string.isEmpty();
+	}
 
 }

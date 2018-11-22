@@ -11,7 +11,6 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<!-- entidade mapeada -->
-		<class>com.myfinance.domain.Cliente</class>
 		<class>com.myfinance.domain.Pessoa</class>
 		<class>com.myfinance.domain.Conta</class>
 		<class>com.myfinance.domain.Usuario</class>
@@ -30,8 +29,8 @@
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 
-			<!-- atualiza o banco, gera as tabelas se for preciso 
-			<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+			<!-- atualiza o banco, gera as tabelas se for preciso
+			<property name="hibernate.hbm2ddl.auto" value="create"/> -->
 		</properties>
 	</persistence-unit>
 </persistence>
